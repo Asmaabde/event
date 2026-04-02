@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>AI vs MEDICINE | The Great Debate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #060B14;
+      font-family: 'DM Sans', sans-serif;
+      color: #F0FAFA;
+      line-height: 1.4;
+    }
+
+    :root {
+      --teal: #00C9C8;
+      --teal-dark: #009B9A;
+      --teal-light: #7EEEED;
+      --purple: #7B2FBE;
+      --purple-light: #A855F7;
+      --purple-dark: #5B1F8E;
+      --bg: #060B14;
+      --bg2: #0D1526;
+      --bg3: #111D35;
+      --white: #F0FAFA;
+      --gray: #8BA3B8;
+      --card-bg: rgba(13, 21, 38, 0.85);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 2rem;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 12vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, var(--teal), var(--purple-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .subhead {
+      text-align: center;
+      color: var(--gray);
+      border-bottom: 1px solid rgba(0,201,200,0.25);
+      display: inline-block;
+      width: auto;
+      margin: 0 auto 2rem auto;
+      padding-bottom: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .vs-arena {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
+      position: relative;
+    }
+
+    .team {
+      flex: 1;
+      min-width: 280px;
+      background: var(--card-bg);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      padding: 1.8rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s;
+    }
+
+    .team-doctors {
+      border-top: 4px solid var(--teal);
+      box-shadow: 0 10px 20px -8px rgba(0, 201, 200, 0.25);
+    }
+
+    .team-ai {
+      border-top: 4px solid var(--purple-light);
+      box-shadow: 0 10px 20px -8px rgba(168, 85, 247, 0.25);
+    }
+
+    .team-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.8rem;
+      letter-spacing: 2px;
+    }
+
+    .doctors .team-title {
+      color: var(--teal);
+      text-shadow: 0 0 6px rgba(0,201,200,0.3);
+    }
+
+    .ai .team-title {
+      color: var(--purple-light);
+      text-shadow: 0 0 6px rgba(168,85,247,0.3);
+    }
+
+    .cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .debate-card {
+      background: #0D1526;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .debate-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.6);
+      border-color: rgba(0,201,200,0.4);
+    }
+
+    .doctors .debate-card:hover {
+      box-shadow: 0 20px 30px -12px rgba(0, 201, 200, 0.3);
+      border-color: var(--teal);
+    }
+
+    .ai .debate-card:hover {
+      box-shadow: 0 20px 30px -12px rgba(168, 85, 247, 0.3);
+      border-color: var(--purple-light);
+    }
+
+    .photo-placeholder {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid rgba(0,201,200,0.3);
+    }
+
+    .photo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ai .photo-placeholder {
+      border-color: rgba(168,85,247,0.4);
+    }
+
+    .card-info {
+      flex: 1;
+    }
+
+    .card-info h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .card-info p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    .badge-title {
+      font-size: 0.7rem;
+      background: rgba(0,201,200,0.12);
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      margin-top: 0.4rem;
+      color: var(--teal);
+    }
+
+    .ai .badge-title {
+      background: rgba(168,85,247,0.12);
+      color: var(--purple-light);
+    }
+
+    .vs-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: 900;
+      font-family: 'Bebas Neue', sans-serif;
+      background: radial-gradient(circle at center, rgba(255,77,77,0.2), transparent);
+      width: 90px;
+      border-radius: 100px;
+      text-shadow: 0 0 12px rgba(255, 60, 60, 0.5);
+      color: #ff5e5e;
+      letter-spacing: 6px;
+    }
+
+    @media (max-width: 800px) {
+      .vs-arena {
+        flex-direction: column;
+      }
+      .vs-divider {
+        order: 2;
+        margin: 0 auto;
+        width: auto;
+        background: none;
+        font-size: 2.5rem;
+      }
+      .team:first-child {
+        order: 1;
+      }
+      .team:last-child {
+        order: 3;
+      }
+      .container {
+        padding: 1.2rem;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .active-page {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .profile-container {
+      max-width: 900px;
+      margin: 1rem auto;
+      background: #0D1526;
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(0,201,200,0.2);
+      box-shadow: 0 30px 40px -20px black;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .large-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--teal);
+      box-shadow: 0 0 0 4px rgba(0,0,0,0.3);
+    }
+
+    .large-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ai .large-photo {
+      border-color: var(--purple-light);
+    }
+
+    .profile-title h2 {
+      font-size: 2rem;
+      font-family: 'Syne', sans-serif;
+      margin-bottom: 0.3rem;
+    }
+
+    .profile-title p {
+      font-size: 1rem;
+      color: var(--gray);
+    }
+
+    .institution {
+      font-size: 0.9rem;
+      background: rgba(0,201,200,0.1);
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      margin-top: 0.5rem;
+      color: var(--teal);
+    }
+
+    .ai .institution {
+      background: rgba(168,85,247,0.12);
+      color: var(--purple-light);
+    }
+
+    .bio, .topics-list {
+      background: #0a0f1a;
+      padding: 1.2rem;
+      border-radius: 1.2rem;
+      margin: 1.2rem 0;
+      border-left: 4px solid;
+    }
+
+    .bio {
+      border-left-color: var(--teal);
+    }
+
+    .ai .bio {
+      border-left-color: var(--purple-light);
+    }
+
+    .topics-list h4, .bio h4 {
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      font-size: 1.1rem;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .topics-list ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .topics-list li {
+      margin: 0.5rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .topics-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--teal);
+    }
+
+    .ai .topics-list li::before {
+      color: var(--purple-light);
+    }
+
+    .timer-section {
+      background: #05080f;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .timer-control-panel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .timer-display {
+      font-family: 'Bebas Neue', monospace;
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 6px;
+      background: #00000055;
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 60px;
+      color: var(--teal);
+      margin: 0.5rem 0;
+    }
+
+    .timer-red {
+      color: #ff6464 !important;
+      text-shadow: 0 0 5px #ff0000aa;
+    }
+
+    .timer-btn {
+      padding: 0.6rem 1.6rem;
+      border-radius: 2rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--teal);
+      color: #060B14;
+    }
+
+    .timer-btn.ai-btn {
+      background: var(--purple-light);
+      color: white;
+    }
+
+    .timer-btn.secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .timer-btn.secondary:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .timer-btn.danger {
+      background: rgba(255,100,100,0.2);
+      color: #ff8a8a;
+    }
+
+    .timer-btn.danger:hover {
+      background: rgba(255,100,100,0.35);
+    }
+
+    .duration-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dur-label {
+      color: var(--gray);
+      font-size: 0.8rem;
+    }
+
+    .dur-input {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(0,201,200,0.3);
+      color: var(--teal);
+      padding: 6px 12px;
+      border-radius: 30px;
+      font-family: 'Bebas Neue', monospace;
+      font-size: 1rem;
+      width: 80px;
+      text-align: center;
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.8rem 1.8rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(0,201,200,0.2);
+      border-color: var(--teal);
+      transform: scale(0.98);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: #4a4a60;
+      border-top: 1px solid rgba(0,201,200,0.1);
+      padding-top: 2rem;
+    }
+
+    .about-us-section {
+      margin-top: 4rem;
+      padding: 2rem 1rem;
+      background: rgba(13, 21, 38, 0.6);
+      border-radius: 2rem;
+      border: 1px solid rgba(0,201,200,0.15);
+    }
+
+    .about-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      text-align: center;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--teal), var(--purple-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .member-card {
+      background: #0D1526;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      width: 200px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.2s;
+    }
+
+    .member-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0,201,200,0.4);
+    }
+
+    .member-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 1rem;
+      border: 2px solid rgba(0,201,200,0.3);
+    }
+
+    .member-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .member-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .member-role {
+      font-size: 0.7rem;
+      color: var(--teal);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .member-bio {
+      font-size: 0.7rem;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+
+    button {
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="appRoot">
+  <div id="landingPage" class="page active-page">
+    <h1>⚡ AI vs MEDICINE ⚡</h1>
+    <div style="text-align: center; margin-bottom: 1rem;">
+      <span class="subhead">The Grand Academic Debate • Who holds the future of healthcare?</span>
+    </div>
+
+    <div class="vs-arena">
+      <div class="team team-doctors doctors">
+        <div class="team-title">🩺 THE DOCTORS</div>
+        <div class="cards-grid" id="doctorsGrid"></div>
+      </div>
+      <div class="vs-divider">VS</div>
+      <div class="team team-ai ai">
+        <div class="team-title">🤖 AI PROFESSORS</div>
+        <div class="cards-grid" id="aiGrid"></div>
+      </div>
+    </div>
+
+    <div class="about-us-section">
+      <div class="about-title">✧ ABOUT THE CREATORS ✧</div>
+      <div class="team-grid" id="aboutTeamGrid"></div>
+      <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: var(--gray);">Built with passion for the future of medicine — Debate Event 2026</p>
+    </div>
+    <footer>⚡ Click any debater card to open detailed profile & control your debate timer</footer>
+  </div>
+
+  <div id="profilePage" class="page">
+    <div id="profileDynamicContent"></div>
+    <div style="text-align: center; margin-top: 1rem;">
+      <button class="back-btn" id="backToLandingBtn">← Back to Battle</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  
+  const doctors = [
+    { 
+      id: "doc_sarah", 
+      name: "Dr. Sarah Mitchell", 
+      title: "Cardiologist", 
+      institution: "Mayo Clinic", 
+      experience: "15 years experience",
+
+      imageUrl: "https://randomuser.me/api/portraits/women/68.jpg",
+      shortBio: "Leading cardiologist with breakthrough research in AI-assisted echocardiography. Passionate about preserving human touch in critical care.", 
+      topics: ["AI in diagnostic accuracy: risk vs reliability", "Can algorithms replace clinical intuition?", "Ethical triage: human empathy vs machine efficiency"] 
+    },
+    { 
+      id: "doc_james", 
+      name: "Dr. James Okafor", 
+      title: "Neurologist", 
+      institution: "Johns Hopkins Hospital", 
+      experience: "12 years experience",
+     
+      imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+      shortBio: "Expert in brain-computer interfaces and neurodegenerative diseases. Advocates for clinician oversight in AI-driven neurology.", 
+      topics: ["Deep learning for early Alzheimer's: promise or peril?", "Autonomy in neurosurgical robots", "Data bias in neurological datasets"] 
+    },
+    { 
+      id: "doc_lena", 
+      name: "Dr. Lena Hoffmann", 
+      title: "Oncologist", 
+      institution: "MD Anderson Cancer Center", 
+      experience: "18 years experience",
+   
+      imageUrl: "https://randomuser.me/api/portraits/women/45.jpg",
+      shortBio: "Pioneer in personalized oncology. Believes AI must augment, not replace, the doctor-patient relationship during cancer care.", 
+      topics: ["AI in genomic sequencing & targeted therapy", "Black-box models in life-or-death decisions", "Humanized care vs algorithmic protocols"] 
+    }
+  ];
+
+  const aiProfessors = [
+    { 
+      id: "prof_alan", 
+      name: "Prof. Alan Turing Jr.", 
+      title: "AI Ethics", 
+      institution: "Stanford University", 
+      expertise: "Ethical frameworks",
+     
+      imageUrl: "https://randomuser.me/api/portraits/men/15.jpg",
+      shortBio: "Leading voice in algorithmic accountability. Focuses on transparent AI for high-stakes medical environments.", 
+      topics: ["Accountability when AI misdiagnoses", "Bias mitigation in medical AI", "Regulatory challenges for autonomous systems"] 
+    },
+    { 
+      id: "prof_mei", 
+      name: "Prof. Mei Zhang", 
+      title: "Machine Learning", 
+      institution: "MIT", 
+      expertise: "Deep Learning",
+    
+      imageUrl: "https://randomuser.me/api/portraits/women/23.jpg",
+      shortBio: "Created award-winning diagnostic models for rare diseases. Believes scalable AI will democratize global healthcare.", 
+      topics: ["Generative AI for drug discovery", "Federated learning & patient privacy", "Superhuman performance in radiology"] 
+    },
+    { 
+      id: "prof_carlos", 
+      name: "Prof. Carlos Rivera", 
+      title: "Deep Learning", 
+      institution: "Oxford University", 
+      expertise: "Neural Networks",
+      
+      imageUrl: "https://randomuser.me/api/portraits/men/42.jpg",
+      shortBio: "Researcher in interpretable neural architectures. Seeks synergy between physicians and predictive models.", 
+      topics: ["Explainability in clinical decision support", "Reinforcement learning for treatment planning", "Limits of current AI in surgery"] 
+    }
+  ];
+
+  const allDebaters = [...doctors.map(d => ({ ...d, team: "doctors" })), ...aiProfessors.map(a => ({ ...a, team: "ai" }))];
+
+  // أعضاء الفريق مع صورهم المباشرة
+  const teamMembers = [
+    { 
+      name: "Ameziane Amani", 
+      role: "Computer Science engineer", 
+      bio: "Specializing in Information Security as a 3rd year student",
+     
+      imageUrl: "C:\\Users\\Shift\\Desktop\\event\\.vscode\\img\\amanieventt.jpg"
+    },
+    { 
+      name: "Abdessmed Asma", 
+      role: "Computer Science engineer", 
+      bio: "Specializing in Network as a 3rd year student", 
+    
+      imageUrl: "C:\\Users\\Shift\\Desktop\\event\\.vscode\\img\\asma.jpg"
+    },
+    { 
+      name: "Gadda Maya Lyna", 
+      role: "Computer Science engineer", 
+      bio: "Specializing in Information Security as a 3rd year student", 
+     
+      imageUrl: "C:\\Users\\Shift\\Desktop\\event\\.vscode\\img\\maya.jpg"
+    },
+        { 
+      name: "Louchene Anes", 
+      role: "Master 01 Computer Science ", 
+      bio: "Specializing in artificial intelligence ", 
+     
+      imageUrl: ""
+    },
+
+  ]
+  function renderAboutTeam() {
+    const grid = document.getElementById("aboutTeamGrid");
+    if (!grid) return;
+    grid.innerHTML = "";
+    teamMembers.forEach((m) => {
+      const card = document.createElement("div");
+      card.className = "member-card";
+      card.innerHTML = `
+        <div class="member-avatar">
+          <img src="${m.imageUrl}" alt="${m.name}">
+        </div>
+        <div class="member-name">${escapeHtml(m.name)}</div>
+        <div class="member-role">${escapeHtml(m.role)}</div>
+        <div class="member-bio">${escapeHtml(m.bio)}</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function renderLanding() {
+    const doctorsGrid = document.getElementById("doctorsGrid");
+    const aiGrid = document.getElementById("aiGrid");
+    if (!doctorsGrid || !aiGrid) return;
+    doctorsGrid.innerHTML = "";
+    aiGrid.innerHTML = "";
+    
+    doctors.forEach((doc) => { 
+      doctorsGrid.appendChild(createCardElement(doc, "doctors")); 
+    });
+    aiProfessors.forEach((prof) => { 
+      aiGrid.appendChild(createCardElement(prof, "ai")); 
+    });
+    renderAboutTeam();
+  }
+
+  function createCardElement(person, teamType) {
+    const div = document.createElement("div");
+    div.className = "debate-card";
+    div.setAttribute("data-id", person.id);
+    
+    div.innerHTML = `
+      <div class="photo-placeholder">
+        <img src="${person.imageUrl}" alt="${person.name}">
+      </div>
+      <div class="card-info">
+        <h3>${escapeHtml(person.name)}</h3>
+        <p>${escapeHtml(person.title)}${person.institution ? ' • ' + escapeHtml(person.institution) : (person.expertise ? ' • ' + escapeHtml(person.expertise) : '')}</p>
+        <span class="badge-title">${teamType === "doctors" ? (person.experience || "Senior Physician") : (person.expertise || "AI Researcher")}</span>
+      </div>
+    `;
+    div.addEventListener("click", (e) => { 
+      e.stopPropagation(); 
+      openProfile(person.id);
+    });
+    return div;
+  }
+
+  // باقي دوال التايمر والبروفايل...
+  let activeTimerInterval = null;
+  let currentRemainingSeconds = 180;
+  let currentTotalSeconds = 180;
+  let isTimerRunning = false;
+  let currentTimerTeam = "doctors";
+  let timerDisplayElement = null;
+
+  function stopTimer() {
+    if (activeTimerInterval) {
+      clearInterval(activeTimerInterval);
+      activeTimerInterval = null;
+    }
+    isTimerRunning = false;
+  }
+
+  function updateTimerUI() {
+    if (!timerDisplayElement) return;
+    const mins = Math.floor(currentRemainingSeconds / 60);
+    const secs = currentRemainingSeconds % 60;
+    timerDisplayElement.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    if (currentRemainingSeconds <= 0) {
+      timerDisplayElement.innerText = "00:00";
+      timerDisplayElement.classList.add("timer-red");
+    } else if (currentRemainingSeconds <= 60) {
+      timerDisplayElement.classList.add("timer-red");
+    } else {
+      timerDisplayElement.classList.remove("timer-red");
+    }
+  }
+
+  function startCountdown() {
+    if (activeTimerInterval) stopTimer();
+    if (currentRemainingSeconds <= 0) return;
+    isTimerRunning = true;
+    activeTimerInterval = setInterval(() => {
+      if (currentRemainingSeconds > 0 && isTimerRunning) {
+        currentRemainingSeconds--;
+        updateTimerUI();
+        if (currentRemainingSeconds <= 0) {
+          stopTimer();
+          updateTimerUI();
+          alert("⏰ Time's Up! The debate segment for this speaker has concluded.");
+        }
+      } else if (currentRemainingSeconds <= 0) {
+        stopTimer();
+      }
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    isTimerRunning = false;
+    if (activeTimerInterval) clearInterval(activeTimerInterval);
+    activeTimerInterval = null;
+  }
+
+  function resetTimerToDuration() {
+    const durInput = document.getElementById("profileDurInput");
+    let mins = parseInt(durInput?.value);
+    if (isNaN(mins) || mins < 1) mins = 3;
+    if (mins > 30) mins = 30;
+    currentTotalSeconds = mins * 60;
+    currentRemainingSeconds = currentTotalSeconds;
+    stopTimer();
+    isTimerRunning = false;
+    updateTimerUI();
+    const startBtn = document.getElementById("profileStartBtn");
+    if (startBtn) startBtn.textContent = "Start";
+  }
+
+  function openProfile(personId) {
+    const person = allDebaters.find(p => p.id === personId);
+    if (!person) return;
+    currentTimerTeam = person.team === "doctors" ? "doctors" : "ai";
+    stopTimer();
+    isTimerRunning = false;
+    document.getElementById("landingPage").classList.remove("active-page");
+    document.getElementById("profilePage").classList.add("active-page");
+    const profileContainer = document.getElementById("profileDynamicContent");
+    if (!profileContainer) return;
+    const teamClass = person.team === "doctors" ? "doctors" : "ai";
+    const borderAccent = person.team === "doctors" ? "#00C9C8" : "#A855F7";
+    const topicsHtml = person.topics.map(topic => `<li>${escapeHtml(topic)}</li>`).join('');
+    const defaultMinutes = 3;
+    currentTotalSeconds = defaultMinutes * 60;
+    currentRemainingSeconds = currentTotalSeconds;
+
+    const profileHtml = `
+      <div class="profile-container ${teamClass}" style="border-left: 6px solid ${borderAccent};">
+        <div class="profile-header">
+          <div class="large-photo">
+            <img src="${person.imageUrl}" alt="${person.name}">
+          </div>
+          <div class="profile-title">
+            <h2>${escapeHtml(person.name)}</h2>
+            <p><strong>${escapeHtml(person.title)}</strong></p>
+            <span class="institution">${escapeHtml(person.institution || (person.expertise ? person.expertise : "Guest Faculty"))}</span>
+          </div>
+        </div>
+        <div class="bio">
+          <h4>📖 Bio</h4>
+          <p>${escapeHtml(person.shortBio)} ${person.experience ? ` (${person.experience})` : ''}</p>
+        </div>
+        <div class="topics-list">
+          <h4>🎤 Key Debate Topics</h4>
+          <ul>${topicsHtml}</ul>
+        </div>
+        <div class="timer-section">
+          <div style="font-weight: 500; margin-bottom: 8px;">⏱️ Debate Timer — Manual Control</div>
+          <div class="timer-display" id="profileTimer">${String(defaultMinutes).padStart(2,'0')}:00</div>
+          <div class="duration-selector">
+            <span class="dur-label">Set duration (min):</span>
+            <input type="number" id="profileDurInput" class="dur-input" value="${defaultMinutes}" min="1" max="30" step="1">
+            <button class="timer-btn secondary" id="applyDurBtn">Apply</button>
+          </div>
+          <div class="timer-control-panel">
+            <button class="timer-btn ${person.team === 'ai' ? 'ai-btn' : ''}" id="profileStartBtn">Start</button>
+            <button class="timer-btn secondary" id="profilePauseBtn">Pause</button>
+            <button class="timer-btn danger" id="profileResetBtn">Reset</button>
+          </div>
+          <div style="font-size: 0.7rem; margin-top: 10px;">⚡ Click Start to begin — Pause anytime, Reset sets to chosen duration</div>
+        </div>
+      </div>
+    `;
+    profileContainer.innerHTML = profileHtml;
+    timerDisplayElement = document.getElementById("profileTimer");
+    updateTimerUI();
+
+    const startBtn = document.getElementById("profileStartBtn");
+    const pauseBtn = document.getElementById("profilePauseBtn");
+    const resetBtn = document.getElementById("profileResetBtn");
+    const applyDurBtn = document.getElementById("applyDurBtn");
+    const durInput = document.getElementById("profileDurInput");
+
+    if (startBtn) startBtn.onclick = () => { if (!isTimerRunning && currentRemainingSeconds > 0) startCountdown(); else if (currentRemainingSeconds <=0) resetTimerToDuration(); };
+    if (pauseBtn) pauseBtn.onclick = () => { pauseTimer(); };
+    if (resetBtn) resetBtn.onclick = () => { resetTimerToDuration(); };
+    if (applyDurBtn && durInput) applyDurBtn.onclick = () => { resetTimerToDuration(); };
+  }
+
+  function escapeHtml(str) { 
+    if(!str) return ''; 
+    return str.replace(/[&<>]/g, function(m) { 
+      if(m === '&') return '&amp;'; 
+      if(m === '<') return '&lt;'; 
+      if(m === '>') return '&gt;'; 
+      return m;
+    }); 
+  }
+  
+  function goBackToLanding() {
+    stopTimer();
+    isTimerRunning = false;
+    document.getElementById("profilePage").classList.remove("active-page");
+    document.getElementById("landingPage").classList.add("active-page");
+    if (timerDisplayElement) timerDisplayElement.innerText = "03:00";
+  }
+  
+  function init() {
+    renderLanding();
+    const backBtn = document.getElementById("backToLandingBtn");
+    if (backBtn) {
+      const newBack = backBtn.cloneNode(true);
+      backBtn.parentNode.replaceChild(newBack, backBtn);
+      newBack.addEventListener("click", (e) => { e.preventDefault(); goBackToLanding(); });
+    }
+  }
+  
+  window.addEventListener("DOMContentLoaded", () => {
+    init();
+    document.getElementById("landingPage").classList.add("active-page");
+    document.getElementById("profilePage").classList.remove("active-page");
+  });
+</script>
+
+</body>
+</html>
